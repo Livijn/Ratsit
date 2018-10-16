@@ -4,7 +4,7 @@ Fork of `jongotlin/ratsit`.
 
 ## Installation
 ```bash
-$ composer require flivijn/ratsit
+$ composer require livijn/ratsit
 ```
 
 ## Usage
