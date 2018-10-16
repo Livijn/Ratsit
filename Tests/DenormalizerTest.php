@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace JGI\Ratsit\Tests;
+namespace livijn\Ratsit\Tests;
 
-use JGI\Ratsit\Denormalizer;
-use JGI\Ratsit\Model\Address;
-use JGI\Ratsit\Model\Person;
-use JGI\Ratsit\Model\SearchResult;
+use livijn\Ratsit\Denormalizer;
+use livijn\Ratsit\Model\Address;
+use livijn\Ratsit\Model\Person;
+use livijn\Ratsit\Model\SearchResult;
 use PHPUnit\Framework\TestCase;
 
 class DenormalizerTest extends TestCase
@@ -78,7 +78,7 @@ class DenormalizerTest extends TestCase
     /**
      * @test
      * @dataProvider invalidPersonProvider
-     * @expectedException \JGI\Ratsit\Exception\InvalidJsonException
+     * @expectedException \livijn\Ratsit\Exception\InvalidJsonException
      * @expectedExceptionMessage Provided json is invalid
      */
     public function shouldThrowExceptionIfPersonInformationFormatIsNotCorrect($data)
@@ -89,7 +89,7 @@ class DenormalizerTest extends TestCase
     /**
      * @test
      * @dataProvider invalidPersonProvider
-     * @expectedException \JGI\Ratsit\Exception\InvalidJsonException
+     * @expectedException \livijn\Ratsit\Exception\InvalidJsonException
      * @expectedExceptionMessage Provided json is invalid
      */
     public function shouldThrowExceptionIfPersonSearchFormatIsNotCorrect($data)

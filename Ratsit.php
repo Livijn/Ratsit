@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace JGI\Ratsit;
+namespace livijn\Ratsit;
 
 use Http\Client\HttpClient;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Message\RequestFactory;
-use JGI\Ratsit\Event\PersonInformationResultEvent;
-use JGI\Ratsit\Event\PersonSearchResultEvent;
-use JGI\Ratsit\Model\SearchResult;
+use livijn\Ratsit\Event\PersonInformationResultEvent;
+use livijn\Ratsit\Event\PersonSearchResultEvent;
+use livijn\Ratsit\Model\SearchResult;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Ratsit

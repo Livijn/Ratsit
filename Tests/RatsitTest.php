@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace JGI\Ratsit\Tests;
+namespace livijn\Ratsit\Tests;
 
-use JGI\Ratsit\Denormalizer;
-use JGI\Ratsit\Model\Address;
-use JGI\Ratsit\Model\Person;
-use JGI\Ratsit\Model\SearchResult;
-use JGI\Ratsit\Ratsit;
+use livijn\Ratsit\Denormalizer;
+use livijn\Ratsit\Model\Address;
+use livijn\Ratsit\Model\Person;
+use livijn\Ratsit\Model\SearchResult;
+use livijn\Ratsit\Ratsit;
 use PHPUnit\Framework\TestCase;
 use Http\Client\HttpClient;
 use Psr\Http\Message\ResponseInterface;

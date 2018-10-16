@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace JGI\Ratsit\Model;
+namespace livijn\Ratsit\Model;
 
 class Address
 {

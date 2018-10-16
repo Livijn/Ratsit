@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace JGI\Ratsit\Event;
+namespace livijn\Ratsit\Event;
 
-use JGI\Ratsit\Model\Person;
-use JGI\Ratsit\Model\SearchResult;
+use livijn\Ratsit\Model\Person;
+use livijn\Ratsit\Model\SearchResult;
 use Symfony\Component\EventDispatcher\Event;
 
 class PersonSearchResultEvent extends Event

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace JGI\Ratsit\Exception;
+namespace livijn\Ratsit\Exception;
 
 class InvalidJsonException extends \RuntimeException
 {

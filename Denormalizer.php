@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace JGI\Ratsit;
+namespace livijn\Ratsit;
 
-use JGI\Ratsit\Exception\InvalidJsonException;
-use JGI\Ratsit\Model\Address;
-use JGI\Ratsit\Model\Person;
-use JGI\Ratsit\Model\SearchResult;
+use livijn\Ratsit\Exception\InvalidJsonException;
+use livijn\Ratsit\Model\Address;
+use livijn\Ratsit\Model\Person;
+use livijn\Ratsit\Model\SearchResult;
 
 class Denormalizer
 {
