@@ -1,10 +1,10 @@
 # Ratsit/Checkbiz API wrapper
 
-[![Build Status](https://img.shields.io/travis/jongotlin/Ratsit/master.svg)](https://travis-ci.org/jongotlin/Ratsit)
+Fork of `jongotlin/ratsit`.
 
 ## Installation
 ```bash
-$ composer require jongotlin/ratsit
+$ composer require flivijn/ratsit
 ```
 
 ## Usage
@@ -15,8 +15,3 @@ $ratsit->setHttpClient($client); // $client is a \Http\Client\HttpClient
 $persons = $ratsit->searchPerson('Per Fredrik', 'EKEBY');
 $person = $ratsit->findPersonBySocialSecurityNumber('194107081111');
 ```
-
-## Symfony Bundle
-See [jongotlin/ratsit-bundle](https://github.com/jongotlin/RatsitBundle)
- 
-
