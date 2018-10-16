@@ -1,11 +1,11 @@
 {
-  "name": "jongotlin/ratsit",
+  "name": "livijn/ratsit",
   "license": "MIT",
   "type": "api-wrapper",
   "authors": [
     {
-      "name": "Jon Gotlin",
-      "email": "jon@jon.se"
+      "name": "Fredrik Livijn",
+      "email": "fredrik.livijn@gmail.com"
     }
   ],
   "autoload": {
