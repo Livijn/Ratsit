@@ -121,7 +121,7 @@ class Ratsit
             [$this, 'buildRequestInstance'],
             [$method, $package, $parameters]
         );
-
+        
         return $this->httpClient->sendRequest($request);
     }
 
@@ -149,8 +149,6 @@ class Ratsit
     public function findPersonBySocialSecurityNumber(?string $ssn)
     {
         $json = $this->request('personinformation', 'personadress', ['ssn' => $ssn])->getBody()->getContents();
-
-        dump($json);
         
         $person = $this->getDenormalizer()->denormalizerPersonInformation(json_decode($json, true));
 

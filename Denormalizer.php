@@ -21,7 +21,7 @@ class Denormalizer
         if (!$data || !array_key_exists('basic', $data)) {
             throw new InvalidJsonException();
         }
-
+        
         $person = new Person();
         $person->setFirstName($data['basic']['firstName']);
         $person->setGivenName($data['basic']['givenName']);
@@ -34,7 +34,10 @@ class Denormalizer
         $address->setPostalCode($data['basic']['zipCode']);
         $address->setCity($data['basic']['city']);
         $person->setAddress($address);
-        $person->setPhoneNumbers($data['phoneNumbers']['phoneNumbers']);
+
+        if (array_key_exists('phoneNumbers', $data)) {
+            $person->setPhoneNumbers($data['phoneNumbers']);
+        }
 
         return $person;
     }
