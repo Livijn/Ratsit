@@ -150,6 +150,8 @@ class Ratsit
     {
         $json = $this->request('personinformation', 'personadress', ['ssn' => $ssn])->getBody()->getContents();
 
+        dump($json);
+        
         $person = $this->getDenormalizer()->denormalizerPersonInformation(json_decode($json, true));
 
         if ($this->eventDispatcher) {
