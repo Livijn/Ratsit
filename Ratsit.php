@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace livijn\Ratsit;
 
+use Http\Adapter\Guzzle6\Client;
 use Http\Client\HttpClient;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Message\RequestFactory;
@@ -55,6 +56,8 @@ class Ratsit
     {
         $options['token'] = $token;
         $this->setOptions($options);
+
+        $this->setHttpClient(new Client());
     }
 
     /**
