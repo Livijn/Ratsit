@@ -16,12 +16,12 @@ class Denormalizer
      *
      * @return Person
      */
-    public function denormalizerPersonInformation(?array $data)
+    public function denormalizerPersonInformation(array $data)
     {
-        if (!$data || !array_key_exists('basic', $data)) {
+        if (! array_key_exists('basic', $data)) {
             throw new InvalidJsonException();
         }
-        
+
         $person = new Person();
         $person->setFirstName($data['basic']['firstName']);
         $person->setGivenName($data['basic']['givenName']);
@@ -41,14 +41,24 @@ class Denormalizer
 
         return $person;
     }
+
+    public function denormalizerDogsAtAddress(array $data)
+    {
+        if (! array_key_exists('registeredDogsAtAddress', $data)) {
+            throw new InvalidJsonException();
+        }
+
+        return $data['registeredDogsAtAddress']['numberOfDogsRegisteredAtAddress'];
+    }
+
     /**
      * @param array|null $data
      *
      * @return SearchResult|Person[]
      */
-    public function denormalizerPersonSearch(?array $data)
+    public function denormalizerPersonSearch(array $data)
     {
-        if (!$data || !array_key_exists('extendedResult', $data)) {
+        if (! array_key_exists('extendedResult', $data)) {
             throw new InvalidJsonException();
         }
 

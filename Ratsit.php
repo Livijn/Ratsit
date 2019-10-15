@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Ratsit
 {
     /**
-     * @var HttpClient
+     * @var HttpClient skra sasa
      */
     private $httpClient;
 
@@ -124,7 +124,7 @@ class Ratsit
             [$this, 'buildRequestInstance'],
             [$method, $package, $parameters]
         );
-        
+
         return $this->httpClient->sendRequest($request);
     }
 
@@ -152,7 +152,7 @@ class Ratsit
     public function findPersonBySocialSecurityNumber(?string $ssn)
     {
         $json = $this->request('personinformation', 'personadress', ['ssn' => $ssn])->getBody()->getContents();
-        
+
         $person = $this->getDenormalizer()->denormalizerPersonInformation(json_decode($json, true));
 
         if ($this->eventDispatcher) {
@@ -162,6 +162,13 @@ class Ratsit
         }
 
         return $person;
+    }
+
+    public function findAmountOfDogsBySocialSecurityNumber(string $ssn)
+    {
+        $json = $this->request('personinformation', 'hundpaadress', ['ssn' => $ssn])->getBody()->getContents();
+        
+        return $this->getDenormalizer()->denormalizerDogsAtAddress(json_decode($json, true));
     }
 
     /**
