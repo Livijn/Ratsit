@@ -44,7 +44,7 @@ class Ratsit
      * @var array
      */
     private static $defaultOptions = [
-        'url' => 'https://api.ratsit.se/api/v1/',
+        'url' => 'https://api.checkbiz.se/api/v1/',
         'token' => '',
     ];
 
@@ -167,7 +167,7 @@ class Ratsit
     public function findAmountOfDogsBySocialSecurityNumber(string $ssn)
     {
         $json = $this->request('personinformation', 'hundpaadress', ['ssn' => $ssn])->getBody()->getContents();
-        
+
         return $this->getDenormalizer()->denormalizerDogsAtAddress(json_decode($json, true));
     }
 
