@@ -36,7 +36,7 @@ class Denormalizer
         $person->setAddress($address);
 
         if (array_key_exists('phoneNumbers', $data)) {
-            $person->setPhoneNumbers($data['phoneNumbers']);
+            $person->setPhoneNumbers($data['phoneNumbers']['phoneNumbers']);
         }
 
         return $person;
@@ -75,9 +75,11 @@ class Denormalizer
             $address->setPostalCode($row['zipCode']);
             $address->setCity($row['city']);
             $person->setAddress($address);
+
             if (array_key_exists('phoneNumbers', $row)) { // Ratsit only return phone numbers if only one person is found
                 $person->setPhoneNumbers($row['phoneNumbers']);
             }
+
             $persons->add($person);
         }
 

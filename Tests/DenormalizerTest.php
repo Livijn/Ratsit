@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace livijn\Ratsit\Tests;
 
 use livijn\Ratsit\Denormalizer;
+use livijn\Ratsit\Exception\InvalidJsonException;
 use livijn\Ratsit\Model\Address;
 use livijn\Ratsit\Model\Person;
 use livijn\Ratsit\Model\SearchResult;
@@ -17,15 +18,13 @@ class DenormalizerTest extends TestCase
      */
     private $denormalizer;
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->denormalizer = new Denormalizer();
     }
-
-    /**
-     * @test
-     */
-    public function shouldDenormalizePersonInformation()
+    
+    /** @test It should denormalize Person Information */
+    public function it_should_denormalize_person_information()
     {
         $person = $this->denormalizer->denormalizerPersonInformation(
             json_decode(file_get_contents(__DIR__ . '/personInformation.json'), true)
@@ -46,10 +45,8 @@ class DenormalizerTest extends TestCase
         $this->assertEquals('070-4107021', $person->getPhoneNumbers()[0]);
     }
 
-    /**
-     * @test
-     */
-    public function shouldDenormalizePersonSearch()
+    /** @test It should denormalize Person Search */
+    public function it_should_denormalize_person_search()
     {
         $persons = $this->denormalizer->denormalizerPersonSearch(
             json_decode(file_get_contents(__DIR__ . '/personSearch.json'), true)
@@ -75,26 +72,20 @@ class DenormalizerTest extends TestCase
         $this->assertNull($person->getBirthDate());
     }
 
-    /**
-     * @test
-     * @dataProvider invalidPersonProvider
-     * @expectedException \livijn\Ratsit\Exception\InvalidJsonException
-     * @expectedExceptionMessage Provided json is invalid
-     */
-    public function shouldThrowExceptionIfPersonInformationFormatIsNotCorrect($data)
+    /** @test It should throw an exception if person information format is not correct */
+    public function it_should_throw_an_exception_if_person_information_format_is_not_correct()
     {
-        $this->denormalizer->denormalizerPersonInformation($data);
+        $this->expectException(InvalidJsonException::class);
+        $this->expectExceptionMessage('Provided json is invalid');
+        $this->denormalizer->denormalizerPersonInformation($this->invalidPersonProvider());
     }
 
-    /**
-     * @test
-     * @dataProvider invalidPersonProvider
-     * @expectedException \livijn\Ratsit\Exception\InvalidJsonException
-     * @expectedExceptionMessage Provided json is invalid
-     */
-    public function shouldThrowExceptionIfPersonSearchFormatIsNotCorrect($data)
+    /** @test It should throw an exception if person search format is not correct */
+    public function it_should_throw_an_exception_if_person_search_format_is_not_correct()
     {
-        $this->denormalizer->denormalizerPersonSearch($data);
+        $this->expectException(InvalidJsonException::class);
+        $this->expectExceptionMessage('Provided json is invalid');
+        $this->denormalizer->denormalizerPersonSearch($this->invalidPersonProvider());
     }
 
     /**
