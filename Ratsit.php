@@ -1,147 +1,44 @@
 <?php
-
-declare(strict_types=1);
-
 namespace livijn\Ratsit;
 
-use Http\Adapter\Guzzle6\Client;
-use Http\Client\HttpClient;
-use Http\Discovery\MessageFactoryDiscovery;
-use Http\Message\RequestFactory;
-use livijn\Ratsit\Event\PersonInformationResultEvent;
-use livijn\Ratsit\Event\PersonSearchResultEvent;
+use GuzzleHttp\Client;
 use livijn\Ratsit\Model\SearchResult;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Ratsit
 {
-    /**
-     * @var HttpClient skra sasa
-     */
-    private $httpClient;
-
-    /**
-     * @var RequestFactory
-     */
-    private $messageFactory;
-
-    /**
-     * @var array
-     */
+    private $client;
     private $options = [];
-
-    /**
-     * @var Denormalizer
-     */
     private $denormalizer;
 
-    /**
-     * @var EventDispatcherInterface|null
-     */
-    private $eventDispatcher;
-
-    /**
-     * @var array
-     */
-    private static $defaultOptions = [
+    const DEFAULT_OPTIONS = [
         'url' => 'https://api.checkbiz.se/api/v1/',
         'token' => '',
     ];
 
-    /**
-     * @param string $token
-     * @param array $options
-     */
     public function __construct(string $token, array $options = [])
     {
         $options['token'] = $token;
-        $this->setOptions($options);
-
-        $this->setHttpClient(new Client());
-    }
-
-    /**
-     * @param HttpClient $httpClient
-     */
-    public function setHttpClient(HttpClient $httpClient): void
-    {
-        $this->httpClient = $httpClient;
-    }
-
-    /**
-     * @param null|EventDispatcherInterface $eventDispatcher
-     */
-    public function setEventDispatcher(?EventDispatcherInterface $eventDispatcher): void
-    {
-        $this->eventDispatcher = $eventDispatcher;
-    }
-
-    /**
-     * @param array $options
-     */
-    private function setOptions(array $options)
-    {
-        $this->options = self::$defaultOptions;
-        $this->options = array_merge($this->options, $options);
-    }
-
-    /**
-     * @return RequestFactory
-     */
-    private function getMessageFactory()
-    {
-        if (!$this->messageFactory) {
-            $this->messageFactory = MessageFactoryDiscovery::find();
-        }
-
-        return $this->messageFactory;
-    }
-
-    /**
-     * @return Denormalizer
-     */
-    private function getDenormalizer()
-    {
-        if (!$this->denormalizer) {
-            $this->denormalizer = new Denormalizer();
-        }
-
-        return $this->denormalizer;
+        $this->options = array_merge(self::DEFAULT_OPTIONS, $options);
+        $this->client = new Client;
+        $this->denormalizer = new Denormalizer;
     }
 
     /**
      * @param string $method
      * @param string $package
      * @param array $parameters
-     *
-     * @return \Psr\Http\Message\ResponseInterface
-     * @throws \Exception
-     * @throws \Http\Client\Exception
+     * @return mixed
      */
     private function request(string $method, string $package, array $parameters = [])
     {
-        $request = call_user_func_array(
-            [$this, 'buildRequestInstance'],
-            [$method, $package, $parameters]
+        return $this->client->request(
+            'GET',
+            $this->options['url'] . $method . '?' . http_build_query($parameters),
+            ['headers' => [
+                'Authorization' => sprintf('Basic %s', $this->options['token']),
+                'package' => $package,
+            ]]
         );
-
-        return $this->httpClient->sendRequest($request);
-    }
-
-    /**
-     * @param string $method
-     * @param string $package
-     * @param array $parameters
-     *
-     * @return \Psr\Http\Message\RequestInterface
-     */
-    public function buildRequestInstance(string $method, string $package, array $parameters)
-    {
-        $uri = $this->options['url'] . $method . '?' . http_build_query($parameters);
-        return $this->getMessageFactory()->createRequest('GET', $uri, [
-            'Authorization' => sprintf('Basic %s', $this->options['token']),
-            'package' => $package,
-        ]);
     }
 
     /**
@@ -153,22 +50,16 @@ class Ratsit
     {
         $json = $this->request('personinformation', 'personadress', ['ssn' => $ssn])->getBody()->getContents();
 
-        $person = $this->getDenormalizer()->denormalizerPersonInformation(json_decode($json, true));
+        var_dump($json);
 
-        if ($this->eventDispatcher) {
-            $this->eventDispatcher->dispatch(
-                PersonInformationResultEvent::NAME, new PersonInformationResultEvent($person)
-            );
-        }
-
-        return $person;
+        return $this->denormalizer->denormalizerPersonInformation(json_decode($json, true));
     }
 
     public function findAmountOfDogsBySocialSecurityNumber(string $ssn)
     {
         $json = $this->request('personinformation', 'hundpaadress', ['ssn' => $ssn])->getBody()->getContents();
 
-        return $this->getDenormalizer()->denormalizerDogsAtAddress(json_decode($json, true));
+        return $this->denormalizer->denormalizerDogsAtAddress(json_decode($json, true));
     }
 
     /**

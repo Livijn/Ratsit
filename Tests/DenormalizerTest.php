@@ -22,7 +22,7 @@ class DenormalizerTest extends TestCase
     {
         $this->denormalizer = new Denormalizer();
     }
-    
+
     /** @test It should denormalize Person Information */
     public function it_should_denormalize_person_information()
     {
